@@ -5,6 +5,7 @@ import com.cloudteamprofileapi.dto.MemberPatchRequest;
 import com.cloudteamprofileapi.dto.MemberPatchResponse;
 import com.cloudteamprofileapi.dto.MemberResponse;
 import com.cloudteamprofileapi.entity.Member;
+import com.cloudteamprofileapi.exception.MemberNotFoundException;
 import com.cloudteamprofileapi.repository.MemberRepository;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
@@ -37,7 +38,7 @@ public class MemberService {
 
     // 멤버 전체 조회
     @Transactional(readOnly = true)
-    public List<MemberResponse> findAllmembers() {
+    public List<MemberResponse> findAllMembers() {
 
         List<Member> allMembers = memberRepository.findAll();
 
@@ -52,9 +53,7 @@ public class MemberService {
     @Transactional(readOnly = true)
     public MemberResponse findOneMember(Long memberId) {
 
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 멤버를 찾을 수 없습니다."));
-
+        Member member = getMemberById(memberId);
         return MemberResponse.from(member);
     }
 
@@ -62,8 +61,7 @@ public class MemberService {
     @Transactional
     public MemberPatchResponse updateMember(MemberPatchRequest memberPatchRequest, Long memberId) {
 
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 멤버를 찾을 수 없습니다."));
+        Member member = getMemberById(memberId);
 
         Member updatedMember = member.update(
                 memberPatchRequest.getName(),
@@ -78,9 +76,12 @@ public class MemberService {
     @Transactional
     public void deleteMember(Long memberId) {
 
-        Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 멤버를 찾을 수 없습니다."));
-
+        Member member = getMemberById(memberId);
         memberRepository.delete(member);
+    }
+
+    private Member getMemberById(Long memberId) {
+        return memberRepository.findById(memberId)
+                .orElseThrow(MemberNotFoundException::new);
     }
 }
