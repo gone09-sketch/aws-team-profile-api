@@ -39,3 +39,6 @@ out/
 ### Windows OS ###
 Thumbs.db
 desktop.ini
+
+### SSH keys ###
+*.pem
