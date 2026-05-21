@@ -14,26 +14,17 @@ java {
     }
 }
 
-ext {
-    set('springCloudAwsVersion', '3.3.0')
-}
-
-dependencyManagement {
-    imports {
-        mavenBom "io.awspring.cloud:spring-cloud-aws-dependencies:${springCloudAwsVersion}"
-    }
-}
-
 repositories {
     mavenCentral()
 }
 
 dependencies {
+    implementation platform('io.awspring.cloud:spring-cloud-aws-dependencies:4.0.0-RC1')
+    implementation 'io.awspring.cloud:spring-cloud-aws-starter-parameter-store'
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
-    implementation 'io.awspring.cloud:spring-cloud-aws-starter-parameter-store'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly 'com.h2database:h2'
