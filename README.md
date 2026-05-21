@@ -1,8 +1,8 @@
-# AWS Team Profile API
+# AWS Member Profile API
 
 ## 1. 프로젝트 소개
 
-AWS Team Profile API는 Spring Boot로 구현한 팀원 프로필 API를 AWS 클라우드 환경에 배포하는 프로젝트입니다.
+AWS Member Profile API는 Spring Boot로 구현한 팀원 프로필 API를 AWS 클라우드 환경에 배포하는 프로젝트입니다.
 
 팀원 정보 등록·조회·수정과 프로필 이미지 업로드 기능을 구현하고, Amazon EC2, Amazon RDS for MySQL, Amazon S3, AWS IAM Role, AWS Systems Manager Parameter Store를 활용해 실제 운영 환경에 가까운 백엔드 배포 구조를 구성하는 것을 목표로 합니다.
 
@@ -168,4 +168,6 @@ http://13.124.148.129:8080/actuator/health
 ```
 ![EC2 헬스 체크 결과](docs/images/lv1-health-check.png)
 
----
+
+### LV 2. `/actuator/info` URL, Amazon RDS Security Group 인바운드 규칙 캡처
+

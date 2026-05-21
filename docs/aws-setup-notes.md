@@ -42,46 +42,58 @@
 
 ## 2. EC2 설정 기록
 
-- EC2 이름: team-profile-ec2-01
+- EC2 이름: member-profile-ec2-01
 - EC2 인스턴스 ID: i-0ebdc6f477e27a081
 - AMI: Amazon Linux 2023 ARM64 AMI
 - Instance Type: t4g.small
 - Key Pair:
-    - 이름: team-profile-ec2-key
-    - `.pem` 파일은 프로젝트 폴더와 Git 저장소에 포함하지 않음
+  - 이름: member-profile-ec2-key
+  - `.pem` 파일은 프로젝트 폴더와 Git 저장소에 포함하지 않음
 - 배치 Subnet:
-    - member-profile-subnet-public1-ap-northeast-2a
-    - Subnet ID: subnet-0303442d533205c7c
-    - Availability Zone: ap-northeast-2a
+  - member-profile-subnet-public1-ap-northeast-2a
+  - Subnet ID: subnet-0303442d533205c7c
+  - Availability Zone: ap-northeast-2a
 - VPC:
-    - member-profile-vpc
-    - VPC ID: vpc-0b6668fdc215cc67b
+  - member-profile-vpc
+  - VPC ID: vpc-0b6668fdc215cc67b
 - Public IP:
-    - 13.124.148.129
+  - 13.124.148.129
 - Public DNS:
-    - ec2-13-124-148-129.ap-northeast-2.compute.amazonaws.com
+  - ec2-13-124-148-129.ap-northeast-2.compute.amazonaws.com
 - Private IP:
-    - 10.0.3.244
+  - 10.0.3.244
 - Private DNS:
-    - ip-10-0-3-244.ap-northeast-2.compute.internal
+  - ip-10-0-3-244.ap-northeast-2.compute.internal
 - IAM Role:
-    - 없음
+  - 없음
 - Security Group:
-    - 이름: team-profile-ec2-sg
-    - ID: sg-07d4b7c9daa695d0f
+  - 이름: member-profile-ec2-sg
+  - ID: sg-0571e21a513a010a3
+  - 설명: Security group for member profile EC2 instance
 - 허용한 Inbound Port:
-    - SSH 22:
-        - Protocol: TCP
-        - Source: 0.0.0.0/0
-    - Application 8080:
-        - 아직 추가 필요
+  - SSH 22:
+    - Protocol: TCP
+    - Source: 0.0.0.0/0
+    - 용도: EC2 SSH 접속
+  - HTTP 80:
+    - Protocol: TCP
+    - Source: 0.0.0.0/0
+    - 용도: 이후 HTTP 접근 또는 확장 구성을 고려해 허용
+  - Application 8080:
+    - Protocol: TCP
+    - Source: 0.0.0.0/0
+    - 용도: Spring Boot 애플리케이션 직접 접근 및 `/actuator/health` 확인
 - Outbound Rule:
-    - 모든 트래픽 허용
-    - Destination: 0.0.0.0/0
+  - 모든 트래픽 허용
+  - Destination: 0.0.0.0/0
 
 ### 확인 결과
 
 - SSH 접속 확인:
+  - `member-profile-ec2-key.pem` 키 파일을 사용해 EC2에 SSH 접속 성공
 - Java 설치 확인:
+  - Amazon Corretto 17 설치 확인
 - Spring Boot 실행 확인:
+  - `aws-member-profile-api-0.0.1-SNAPSHOT.jar` 파일을 EC2에 `app.jar`로 업로드 후 실행 확인
 - `/actuator/health` 확인:
+  - `http://13.124.148.129:8080/actuator/health` 접속 시 `status: UP` 응답 확인
