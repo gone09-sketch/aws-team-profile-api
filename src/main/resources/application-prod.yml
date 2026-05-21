@@ -1,4 +1,7 @@
 spring:
+  config:
+    import: aws-parameterstore:/member-profile-api/prod/
+
   datasource:
     url: ${DB_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -16,3 +19,15 @@ spring:
     properties:
       hibernate:
         format_sql: false
+
+management:
+  endpoint:
+    health:
+      show-details: never
+  info:
+    env:
+      enabled: true
+
+info:
+  team:
+    name: ${TEAM_NAME}

@@ -6,11 +6,21 @@ plugins {
 
 group = 'com'
 version = '0.0.1-SNAPSHOT'
-description = 'cloud-team-profile-api'
+description = 'aws-member-profile-api'
 
 java {
     toolchain {
         languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+ext {
+    set('springCloudAwsVersion', '3.3.0')
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "io.awspring.cloud:spring-cloud-aws-dependencies:${springCloudAwsVersion}"
     }
 }
 
@@ -23,6 +33,7 @@ dependencies {
     implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
     implementation 'org.springframework.boot:spring-boot-starter-webmvc'
     implementation 'org.springframework.boot:spring-boot-starter-validation'
+    implementation 'io.awspring.cloud:spring-cloud-aws-starter-parameter-store'
     compileOnly 'org.projectlombok:lombok'
     runtimeOnly 'com.mysql:mysql-connector-j'
     runtimeOnly 'com.h2database:h2'
