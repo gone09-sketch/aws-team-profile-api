@@ -42,12 +42,12 @@
 
 ## 2. EC2 설정 기록
 
-- EC2 이름: team-profile-ec2-01
+- EC2 이름: member-profile-ec2-01
 - EC2 인스턴스 ID: i-0ebdc6f477e27a081
 - AMI: Amazon Linux 2023 ARM64 AMI
 - Instance Type: t4g.small
 - Key Pair:
-    - 이름: team-profile-ec2-key
+    - 이름: member-profile-ec2-key
     - `.pem` 파일은 프로젝트 폴더와 Git 저장소에 포함하지 않음
 - 배치 Subnet:
     - member-profile-subnet-public1-ap-northeast-2a
