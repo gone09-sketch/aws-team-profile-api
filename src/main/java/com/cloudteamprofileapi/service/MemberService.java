@@ -5,6 +5,7 @@ import com.cloudteamprofileapi.dto.MemberPatchRequest;
 import com.cloudteamprofileapi.dto.MemberPatchResponse;
 import com.cloudteamprofileapi.dto.MemberResponse;
 import com.cloudteamprofileapi.entity.Member;
+import com.cloudteamprofileapi.exception.MemberNotFoundException;
 import com.cloudteamprofileapi.repository.MemberRepository;
 import lombok.Getter;
 import org.springframework.stereotype.Service;
@@ -53,7 +54,7 @@ public class MemberService {
     public MemberResponse findOneMember(Long memberId) {
 
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 멤버를 찾을 수 없습니다."));
+                .orElseThrow(MemberNotFoundException::new);
 
         return MemberResponse.from(member);
     }
@@ -63,7 +64,7 @@ public class MemberService {
     public MemberPatchResponse updateMember(MemberPatchRequest memberPatchRequest, Long memberId) {
 
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 멤버를 찾을 수 없습니다."));
+                .orElseThrow(MemberNotFoundException::new);
 
         Member updatedMember = member.update(
                 memberPatchRequest.getName(),
@@ -79,7 +80,7 @@ public class MemberService {
     public void deleteMember(Long memberId) {
 
         Member member = memberRepository.findById(memberId)
-                .orElseThrow(() -> new IllegalArgumentException("해당 멤버를 찾을 수 없습니다."));
+                .orElseThrow(MemberNotFoundException::new);
 
         memberRepository.delete(member);
     }
