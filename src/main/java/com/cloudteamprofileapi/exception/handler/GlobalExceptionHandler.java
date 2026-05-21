@@ -19,7 +19,11 @@ public class GlobalExceptionHandler {
         HttpStatus status = e.getStatus();
         ErrorResponse body = new ErrorResponse(e.getStatus(), e.getMessage());
 
-        log.warn("ServiceException 발생: {}", e.getMessage());
+        log.error("[API - ERROR] 서비스 예외 발생. status={}, message={}",
+                e.getStatus(),
+                e.getMessage(),
+                e
+        );
 
         return ResponseEntity.status(e.getStatus()).body(body);
     }

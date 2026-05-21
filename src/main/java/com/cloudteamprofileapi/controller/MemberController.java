@@ -6,11 +6,13 @@ import com.cloudteamprofileapi.dto.MemberPatchResponse;
 import com.cloudteamprofileapi.dto.MemberResponse;
 import com.cloudteamprofileapi.service.MemberService;
 import jakarta.validation.Valid;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
+@Slf4j
 @RestController
 @RequestMapping("/members")
 public class MemberController {
@@ -26,7 +28,9 @@ public class MemberController {
     public ResponseEntity<MemberResponse> createMember(
             @RequestBody @Valid MemberCreateRequest memberCreateRequest) {
 
+        log.info("[API - LOG] 멤버 추가 요청");
         MemberResponse memberCreateResponse = memberService.createMember(memberCreateRequest);
+
         return ResponseEntity.status(HttpStatus.CREATED).body(memberCreateResponse);
     }
 
@@ -34,7 +38,8 @@ public class MemberController {
     @GetMapping
     public ResponseEntity<List<MemberResponse>> findAllMembers() {
 
-        List<MemberResponse> memberGetResponseList = memberService.findAllmembers();
+        log.info("[API - LOG] 멤버 전체 조회 요청");
+        List<MemberResponse> memberGetResponseList = memberService.findAllMembers();
         return ResponseEntity.status(HttpStatus.OK).body(memberGetResponseList);
     }
 
@@ -43,6 +48,7 @@ public class MemberController {
     public ResponseEntity<MemberResponse> findOneMember(
             @PathVariable Long memberId) {
 
+        log.info("[API - LOG] 멤버 단건 조회 요청. memberId={}", memberId);
         MemberResponse memberGetResponse = memberService.findOneMember(memberId);
         return ResponseEntity.status(HttpStatus.OK).body(memberGetResponse);
     }
@@ -53,6 +59,7 @@ public class MemberController {
             @RequestBody @Valid MemberPatchRequest memberPatchRequest,
             @PathVariable Long memberId) {
 
+        log.info("[API - LOG] 멤버 정보 수정 요청. memberId={}", memberId);
         MemberPatchResponse memberPatchResponse = memberService.updateMember(memberPatchRequest, memberId);
         return ResponseEntity.status(HttpStatus.OK).body(memberPatchResponse);
     }
@@ -61,6 +68,7 @@ public class MemberController {
     @DeleteMapping("/{memberId}")
     public ResponseEntity<Void> deleteMember(@PathVariable Long memberId) {
 
+        log.info("[API - LOG] 멤버 삭제 요청. memberId={}", memberId);
         memberService.deleteMember(memberId);
         return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
     }
