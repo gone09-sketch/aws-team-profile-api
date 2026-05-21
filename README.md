@@ -166,8 +166,17 @@ http://13.124.148.129:8080/actuator/health
 → EC2에서 실행 중인 서버
 
 ```
-![EC2 헬스 체크 결과](docs/images/lv1-health-check.png)
+![EC2 Health Check Result](docs/images/lv1-health-check.png)
 
 
 ### LV 2. `/actuator/info` URL, Amazon RDS Security Group 인바운드 규칙 캡처
 
+- Actuator info URL: `http://13.124.148.129:8080/actuator/info`
+- Parameter Store에 저장한 `TEAM_NAME` 값이 `/actuator/info`에서 조회되는 것을 확인
+
+![Health & Info Check](docs/images/lv2-health-info-check.png)
+
+- Amazon RDS Security Group 인바운드 규칙 
+  - EC2 Security Group을 Source로 지정하여 RDS Security Group 인바운드 규칙을 구성
+
+![RDS Security Group 인바운드 규칙](docs/images/lv2-rds-sg-inbound.png)
