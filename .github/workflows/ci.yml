@@ -1,4 +1,4 @@
-name: CI Pipeline
+name: Docker CI Pipeline
 
 on:
   push:
@@ -31,3 +31,12 @@ jobs:
           AWS_ACCESS_KEY_ID: test
           AWS_SECRET_ACCESS_KEY: test
           CLOUD_AWS_S3_BUCKET: test-bucket
+
+      - name: Login to Docker Hub
+        run: echo "${{ secrets.DOCKERHUB_TOKEN }}" | docker login -u "${{ vars.DOCKERHUB_USERNAME }}" --password-stdin
+
+      - name: Build Docker image
+        run: docker build -t ${{ vars.DOCKER_IMAGE }}:latest .
+
+      - name: Push Docker image
+        run: docker push ${{ vars.DOCKER_IMAGE }}:latest
