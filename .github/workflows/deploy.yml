@@ -1,4 +1,4 @@
-name: Docker CI Pipeline
+name: Deploy
 
 on:
   push:
@@ -6,7 +6,7 @@ on:
       - main
 
 jobs:
-  build:
+  deploy:
     runs-on: ubuntu-latest
 
     steps:
@@ -40,3 +40,25 @@ jobs:
 
       - name: Push Docker image
         run: docker push ${{ vars.DOCKER_IMAGE }}:latest
+
+      - name: Deploy to EC2
+        uses: appleboy/ssh-action@v1.0.3
+        with:
+          host: ${{ vars.EC2_HOST }}
+          username: ${{ vars.EC2_USER }}
+          key: ${{ secrets.EC2_SSH_KEY }}
+          script: |
+            docker pull ${{ vars.DOCKER_IMAGE }}:latest
+
+            docker stop ${{ vars.CONTAINER_NAME }} || true
+            docker rm ${{ vars.CONTAINER_NAME }} || true
+
+            docker run -d \
+              --name ${{ vars.CONTAINER_NAME }} \
+              -p 8080:8080 \
+              --restart unless-stopped \
+              -e SPRING_PROFILES_ACTIVE=prod \
+              -e AWS_REGION=ap-northeast-2 \
+              -e AWS_DEFAULT_REGION=ap-northeast-2 \
+              -e SPRING_CLOUD_AWS_PARAMETERSTORE_REGION=ap-northeast-2 \
+              ${{ vars.DOCKER_IMAGE }}:latest
