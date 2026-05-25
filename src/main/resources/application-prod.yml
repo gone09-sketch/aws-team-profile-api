@@ -2,6 +2,11 @@ spring:
   config:
     import: aws-parameterstore:/member-profile-api/prod/
 
+  cloud:
+    aws:
+      region:
+        static: ap-northeast-2
+
   datasource:
     url: ${DB_URL}
     driver-class-name: com.mysql.cj.jdbc.Driver
@@ -26,8 +31,6 @@ spring:
 
 cloud:
   aws:
-    region:
-      static: ap-northeast-2
     s3:
       bucket: ${S3_BUCKET_NAME}
 
