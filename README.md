@@ -279,3 +279,11 @@ http://13.124.148.129:8080/actuator/health
 ![Presigned URL 응답 확인](docs/images/lv3-presigned-url-response.png)
 ![Presigned URL 이미지 접근 성공](docs/images/lv3-presigned-url-access-success.png)
 ![S3 uploads 경로 객체 생성 확인](docs/images/lv3-s3-object-upload-check.png)
+
+<br>
+
+### LV 4. GitHub Actions 성공 화면, `docker ps` 실행 화면
+
+![img_2.png](img_2.png)
+
+![img_1.png](img_1.png)
