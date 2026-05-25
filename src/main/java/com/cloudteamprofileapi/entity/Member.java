@@ -7,6 +7,7 @@ import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.jpa.domain.support.AuditingEntityListener;
+
 import java.time.LocalDateTime;
 
 @Getter
@@ -29,6 +30,8 @@ public class Member {
     @Column(nullable = false)
     private String mbti;
 
+    private String profileImageKey;
+
     @CreatedDate
     @Column(nullable = false, updatable = false)
     private LocalDateTime createdAt;
@@ -37,17 +40,21 @@ public class Member {
     @Column(nullable = false)
     private LocalDateTime updatedAt;
 
-    public Member(String name, Integer age, String mbti) {
+    public Member(String name, Integer age, String mbti, String profileImageKey) {
         this.name = name;
         this.age = age;
         this.mbti = mbti;
+        this.profileImageKey = profileImageKey;
     }
 
-    // update
     public Member update(String name, Integer age, String mbti) {
         if (name != null) this.name = name;
         if (age != null) this.age = age;
         if (mbti != null) this.mbti = mbti;
         return this;
+    }
+
+    public void updateProfileImageKey(String profileImageKey) {
+        this.profileImageKey = profileImageKey;
     }
 }

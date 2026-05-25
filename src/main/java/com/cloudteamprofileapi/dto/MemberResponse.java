@@ -13,7 +13,9 @@ public class MemberResponse {
     private final String name;
     private final Integer age;
     private final String mbti;
+    private final String profileImageKey;
     private final LocalDateTime createdAt;
+    private final LocalDateTime updatedAt;
 
     public static MemberResponse from(Member member) {
         return new MemberResponse(
@@ -21,7 +23,9 @@ public class MemberResponse {
                 member.getName(),
                 member.getAge(),
                 member.getMbti(),
-                member.getCreatedAt()
+                member.getProfileImageKey(),
+                member.getCreatedAt(),
+                member.getUpdatedAt()
         );
     }
 }

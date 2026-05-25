@@ -8,6 +8,10 @@ spring:
     username: ${DB_USERNAME}
     password: ${DB_PASSWORD}
 
+  servlet:
+    multipart:
+      max-file-size: 10MB
+
   h2:
     console:
       enabled: false
@@ -19,6 +23,13 @@ spring:
     properties:
       hibernate:
         format_sql: false
+
+cloud:
+  aws:
+    region:
+      static: ap-northeast-2
+    s3:
+      bucket: ${S3_BUCKET_NAME}
 
 management:
   endpoint:
