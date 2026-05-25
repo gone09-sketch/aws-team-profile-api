@@ -8,23 +8,23 @@ import java.time.LocalDateTime;
 
 @Getter
 @RequiredArgsConstructor
-public class MemberPatchResponse {
+public class MemberCreateResponse {
 
     private final Long id;
     private final String name;
     private final Integer age;
     private final String mbti;
+    private final String profileImageKey;
     private final LocalDateTime createdAt;
-    private final LocalDateTime updatedAt;
 
-    public static MemberPatchResponse from(Member member) {
-        return new MemberPatchResponse(
+    public static MemberCreateResponse from(Member member) {
+        return new MemberCreateResponse(
                 member.getId(),
                 member.getName(),
                 member.getAge(),
                 member.getMbti(),
-                member.getCreatedAt(),
-                member.getUpdatedAt()
+                member.getProfileImageKey(),
+                member.getCreatedAt()
         );
     }
 }
