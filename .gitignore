@@ -42,3 +42,24 @@ desktop.ini
 
 ### SSH keys ###
 *.pem
+
+### Environment / Secrets ###
+.env
+.env.*
+*.key
+*.p8
+*.p12
+*.jks
+
+### Logs ###
+*.log
+logs/
+test-error.log
+
+### Local secret application configs ###
+application-secret.yml
+application-private.yml
+application-aws.yml
+
+### Docker local override ###
+docker-compose.override.yml
