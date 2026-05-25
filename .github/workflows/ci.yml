@@ -24,3 +24,10 @@ jobs:
 
       - name: Build with Gradle
         run: ./gradlew clean build
+        env:
+          SPRING_PROFILES_ACTIVE: test
+          AWS_REGION: ap-northeast-2
+          AWS_DEFAULT_REGION: ap-northeast-2
+          AWS_ACCESS_KEY_ID: test
+          AWS_SECRET_ACCESS_KEY: test
+          CLOUD_AWS_S3_BUCKET: test-bucket
