@@ -284,6 +284,43 @@ http://13.124.148.129:8080/actuator/health
 
 ### LV 4. GitHub Actions 성공 화면, `docker ps` 실행 화면
 
-![img_2.png](img_2.png)
+#### 1. GitHub Actions 배포 워크플로우 성공 확인
 
-![img_1.png](img_1.png)
+- `main` 브랜치에 코드가 병합되면 GitHub Actions의 `Deploy` 워크플로우가 실행되도록 구성
+
+배포 워크플로우는 다음 순서로 진행됩니다.
+
+1. Gradle build/test 실행
+2. Docker 이미지 빌드
+3. Docker Hub에 이미지 push
+4. EC2 서버에 SSH 접속
+5. 최신 Docker 이미지 pull
+6. 기존 컨테이너 중지 및 삭제
+7. 새 컨테이너 실행
+
+![GitHub Actions 성공 화면](docs/images/lv4-github-actions-success.png)
+
+<br>
+
+#### 2. EC2 Docker 컨테이너 실행 확인
+
+- EC2 서버에 접속한 뒤 `docker ps` 명령어로 컨테이너가 정상 실행 중인지 확인
+- 실행 중인 컨테이너 목록에서 `aws-team-profile-api` 컨테이너가 `Up` 상태이며, `8080` 포트로 정상 실행 중인 것을 확인
+
+```bash
+docker ps
+```
+![EC2 docker ps 실행 화면](docs/images/lv4-docker-ps.png)
+
+<br>
+
+#### 3. 코드 수정 후 자동 배포 반영 확인
+
+- 배포 반영 여부를 확인하기 위해 테스트용 API를 추가한 뒤, GitHub에 push 및 `main` 브랜치 병합을 진행
+- GitHub Actions가 자동으로 실행되었고, EC2에 새 Docker 이미지가 배포된 뒤 API 응답을 통해 변경사항이 정상 반영된 것을 확인
+
+```bash
+curl http://13.124.148.129:8080/api/deploy-check
+```
+
+![코드 수정 후 자동 배포 반영 확인](docs/images/lv4-deploy-check.png)
